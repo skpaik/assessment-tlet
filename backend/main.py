@@ -2,9 +2,10 @@ from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from app import crud, models, schemas
+from app import crud, models
 from app.database import SessionLocal, engine
 from app.helpers import get_page_limit
+from app.number_ops import get_number_stats
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -41,8 +42,17 @@ def read_root():
 
 @app.get("/number-details/{number}")
 def number_details(number: int, db: Session = Depends(get_db)):
-    query_log: schemas.QueryLog
+    number_stats = get_number_stats(number)
+    number_log = update_number_detail(db, number)
 
+    return {
+        "number": number,
+        "number_detail": number_stats,
+        "number_log": number_log
+    }
+
+
+def update_number_detail(db, number):
     db_query_log = crud.get_query_log_by_number(db, number=number)
 
     if db_query_log:
@@ -50,7 +60,7 @@ def number_details(number: int, db: Session = Depends(get_db)):
     else:
         db_query_log = crud.create_query_log(db=db, number=number)
 
-    return {"number": number, "details": db_query_log}
+    return db_query_log
 
 
 @app.get("/popular-queries/")
@@ -60,4 +70,8 @@ def popular_queries(request: Request, db: Session = Depends(get_db)):
 
     db_query_log = crud.get_popular_queries(db, limit=limit)
 
-    return {"query_params": query_params, "db_query_log": db_query_log, "limit": limit}
+    return {
+        "query_params": query_params,
+        "db_query_log": db_query_log,
+        "limit": limit
+    }
