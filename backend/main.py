@@ -1,5 +1,4 @@
-from fastapi import Depends, FastAPI
-from fastapi import Request
+from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
@@ -62,4 +61,3 @@ def popular_queries(request: Request, db: Session = Depends(get_db)):
     db_query_log = crud.get_popular_queries(db, limit=limit)
 
     return {"query_params": query_params, "db_query_log": db_query_log, "limit": limit}
-

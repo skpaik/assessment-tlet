@@ -1,4 +1,3 @@
-
 def get_page_limit(query_params):
     limit = query_params.get("limit", None)
 

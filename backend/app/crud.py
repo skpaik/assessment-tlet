@@ -11,7 +11,6 @@ def get_popular_queries(db: Session, limit: int = 5):
     return db.query(models.QueryLog).order_by(models.QueryLog.hit_count.desc()).limit(limit).all()
 
 
-
 def create_query_log(db: Session, number: int):
     new_query_log = models.QueryLog(number=number)
     db.add(new_query_log)
