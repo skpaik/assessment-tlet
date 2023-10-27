@@ -1,11 +1,11 @@
-from typing import Union
-
 from fastapi import Depends, FastAPI
+from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
 from app.database import SessionLocal, engine
+from app.helpers import get_page_limit
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -55,5 +55,11 @@ def number_details(number: int, db: Session = Depends(get_db)):
 
 
 @app.get("/popular-queries/")
-def popular_queries(q: Union[str, None] = None):
-    return {"q": q}
+def popular_queries(request: Request, db: Session = Depends(get_db)):
+    query_params = request.query_params
+    limit = get_page_limit(query_params)
+
+    db_query_log = crud.get_popular_queries(db, limit=limit)
+
+    return {"query_params": query_params, "db_query_log": db_query_log, "limit": limit}
+
