@@ -14,4 +14,4 @@ Step 1:
 Step 2
 - ```cd frontend```
 - ```npm install```
-- ```npm run dev``
+- ```bash run.sh```
