@@ -44,8 +44,8 @@
 
 ## UI
 - Home Page
-  - ![Diagram](https://github.com/skpaik/tlet/blob/main/ss/home.jpg?raw=true)
+  - ![Diagram](https://github.com/skpaik/tlet/blob/main/ss/home.png?raw=true)
 - Detail Page
-  - ![Diagram](https://github.com/skpaik/tlet/blob/main/ss/detail.jpg?raw=true)
+  - ![Diagram](https://github.com/skpaik/tlet/blob/main/ss/detail.png?raw=true)
 - Popular Page
-  - ![Diagram](https://github.com/skpaik/tlet/blob/main/ss/popular.jpg?raw=true)
+  - ![Diagram](https://github.com/skpaik/tlet/blob/main/ss/popular.png?raw=true)
