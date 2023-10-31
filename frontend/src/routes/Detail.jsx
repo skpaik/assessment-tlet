@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
+import Table from "react-bootstrap/Table";
 import Layout from "../components/layouts/Layout";
 
 function Detail() {
     const [searchParams, setSearchParams] = useSearchParams();
-    console.log()
     const number = searchParams.get("number");
 
     const [numberDetail, setNumberDetail] = useState(null);
@@ -15,6 +15,8 @@ function Detail() {
             .then(data => {
                     console.log(data)
                     setNumberDetail(data)
+
+                    setSearchParams({"number": number})
                 }
             );
     }, [number]);
@@ -43,45 +45,48 @@ function Detail() {
             <div className={'row'}>
                 <div className={'col-12'}>
                     {numberDetail && (
-                        <div>
-                            <h2>Selected number <span className="badge bg-secondary">{numberDetail.number}</span></h2>
-                            <hr/>
-                            <h2>Details</h2>
-                            <h3>Is prime
-                                <span
-                                    className="badge bg-secondary">{numberDetail.number_detail.is_prime.toString()}</span>
-                            </h3>
-                            <h3>Is even
-                                <span
-                                    className="badge bg-secondary">{numberDetail.number_detail.is_even.toString()}                                </span>
-                            </h3>
-                            <h3>Is odd
-                                <span
-                                    className="badge bg-secondary">{numberDetail.number_detail.is_odd.toString()}                                </span>
-                            </h3>
-                            <h3>Is palindrome
-                                <span
-                                    className="badge bg-secondary">{numberDetail.number_detail.is_palindrome.toString()}                                </span>
-                            </h3>
-                            <h3>Is armstrong
-                                <span
-                                    className="badge bg-secondary">{numberDetail.number_detail.is_armstrong.toString()}                                </span>
-                            </h3>
-                            <h3>Factorial
-                                <span
-                                    className="badge bg-secondary">{numberDetail.number_detail.factorial.toString()}                                </span>
-                            </h3>
-                            <hr/>
-                            <h2>Logs</h2>
-                            <h3>Id
-                                <span
-                                    className="badge bg-secondary">{numberDetail.number_log.id.toString()}</span>
-                            </h3>
-                            <h3>Hit count
-                                <span
-                                    className="badge bg-secondary">{numberDetail.number_log.hit_count.toString()}</span>
-                            </h3>
-                        </div>
+                        <Table striped bordered hover>
+                            <tr>
+                                <th>Info</th>
+                                <th>Status</th>
+                            </tr>
+                            <tr key={1}>
+                                <td>Selected number</td>
+                                <td>{numberDetail.number}</td>
+                            </tr>
+                            <tr key={1}>
+                                <td>Is prime</td>
+                                <td>{numberDetail.number_detail.is_prime.toString()}</td>
+                            </tr>
+                            <tr key={1}>
+                                <td>Is even</td>
+                                <td>{numberDetail.number_detail.is_even.toString()}</td>
+                            </tr>
+                            <tr key={1}>
+                                <td>Is odd</td>
+                                <td>{numberDetail.number_detail.is_odd.toString()}</td>
+                            </tr>
+                            <tr key={1}>
+                                <td>Is palindrome</td>
+                                <td>{numberDetail.number_detail.is_palindrome.toString()}</td>
+                            </tr>
+                            <tr key={1}>
+                                <td>Is armstrong</td>
+                                <td>{numberDetail.number_detail.is_armstrong.toString()}</td>
+                            </tr>
+                            <tr key={1}>
+                                <td>Factorial</td>
+                                <td>{numberDetail.number_detail.factorial.toString()}</td>
+                            </tr>
+                            <tr key={1}>
+                                <td>Log id</td>
+                                <td>{numberDetail.number_log.id.toString()}</td>
+                            </tr>
+                            <tr key={1}>
+                                <td>Hit count</td>
+                                <td>{numberDetail.number_log.hit_count.toString()}</td>
+                            </tr>
+                        </Table>
                     )}
                 </div>
             </div>
