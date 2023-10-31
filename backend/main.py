@@ -63,7 +63,7 @@ def update_number_detail(db, number):
     return db_query_log
 
 
-@app.get("/popular-queries/")
+@app.get("/popular-queries")
 def popular_queries(request: Request, db: Session = Depends(get_db)):
     query_params = request.query_params
     limit = get_page_limit(query_params)
