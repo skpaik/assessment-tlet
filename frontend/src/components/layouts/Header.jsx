@@ -15,10 +15,7 @@ export default function Header() {
 
             <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                 <a className="me-3 py-2 link-body-emphasis text-decoration-none" href="/">Home</a>
-                <a className="me-3 py-2 link-body-emphasis text-decoration-none" href="/about">About</a>
-                <a className="me-3 py-2 link-body-emphasis text-decoration-none" href="/detail?number=8">Detail</a>
                 <a className="me-3 py-2 link-body-emphasis text-decoration-none" href="/popular-queries">Popular numbers</a>
-                <a className="py-2 link-body-emphasis text-decoration-none" href="#">Pricing</a>
             </nav>
         </div>
     </header>;

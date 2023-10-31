@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux'
+import {setChartBarValue} from '../app/store/chartSlice'
 import Layout from "../components/layouts/Layout";
 
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip,} from 'chart.js';
@@ -17,6 +18,15 @@ ChartJS.register(
 
 
 function Home() {
+    const barList = useSelector((state) => state.chartSlice.barList)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const tempData = labels.map(() => faker.datatype.number({min: 0, max: 100})).sort()
+        dispatch(setChartBarValue(tempData));
+        updateDataList(tempData);
+    }, []);
+
     const options = {
         responsive: true,
         plugins: {
@@ -37,7 +47,7 @@ function Home() {
         datasets: [
             {
                 label: 'Monthly Average Temperature 2023',
-                data: labels.map(() => faker.datatype.number({min: 0, max: 100})).sort(),
+                data: barList,
                 backgroundColor: 'rgba(99,198,255,0.5)',
             },
         ],
@@ -45,18 +55,16 @@ function Home() {
 
     function handleSortClick(e) {
         e.preventDefault();
-        let tempData = dataList.datasets[0].data;
-        tempData.reverse()
-        setDataList({
-            labels,
-            datasets: [
-                {
-                    label: 'Monthly Average Temperature 2023',
-                    data: tempData,
-                    backgroundColor: 'rgba(99,198,255,0.5)',
-                },
-            ],
-        })
+
+        let tempData = barList;
+
+        Object.freeze(tempData);
+        const arrCopy = [...tempData];
+        arrCopy.reverse()
+
+        updateDataList(arrCopy);
+
+        dispatch(setChartBarValue(arrCopy));
 
         if (sortOrder === "Sort ascending") {
             setSortOrder("Sort descending");
@@ -65,9 +73,7 @@ function Home() {
         }
     }
 
-    function handleRandomizeClick(e) {
-        e.preventDefault();
-        let tempData = labels.map(() => faker.datatype.number({min: 0, max: 100}));
+    function updateDataList(tempData) {
         setDataList({
             labels,
             datasets: [
@@ -78,6 +84,13 @@ function Home() {
                 },
             ],
         })
+    }
+
+    function handleRandomizeClick(e) {
+        e.preventDefault();
+        let tempData = labels.map(() => faker.datatype.number({min: 0, max: 100}));
+        updateDataList(tempData);
+        dispatch(setChartBarValue(tempData));
     }
 
     return (
@@ -96,6 +109,20 @@ function Home() {
                 </div>
                 <div className={'col-6'}>
                     <button className={'btn btn-primary'} onClick={handleRandomizeClick}>Randomize</button>
+                </div>
+            </div>
+            <div className={'row mt-5'}>
+                <div className={'col-4'}>
+                    Click on number
+                </div>
+                <div className={'col-8'}>
+                    {barList.map((val, key) => {
+                        return (
+                            <a key={key} className={"px-4"} href={'http://localhost:3000/detail?number=' + val}>
+                                {val}
+                            </a>
+                        )
+                    })}
                 </div>
             </div>
         </Layout>
