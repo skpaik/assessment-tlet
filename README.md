@@ -30,7 +30,7 @@
 ## Part 3: Integration and Architecture
 - All implemented
 - Architectural Design
-  - ![Diagram](https://github.com/skpaik/tlet/blob/main/architecture_diagram.jpg?raw=true)
+  - ![Diagram](https://github.com/skpaik/tlet/blob/main/ss/architecture_diagram.jpg?raw=true)
   - Database scaling will handing by cloud platform
 
 
@@ -40,3 +40,12 @@
 - Table will have 3 property like `id, number, and like_count`
 - I will run a sql query like `select * from number_like orderBy like_count desc limit 10`
 - Here we can not cache the like by running any algorithm as every moment like is increasing or decresing
+
+
+## UI
+- Home Page
+  - ![Diagram](https://github.com/skpaik/tlet/blob/main/ss/home.jpg?raw=true)
+- Detail Page
+  - ![Diagram](https://github.com/skpaik/tlet/blob/main/ss/detail.jpg?raw=true)
+- Popular Page
+  - ![Diagram](https://github.com/skpaik/tlet/blob/main/ss/popular.jpg?raw=true)
